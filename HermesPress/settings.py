@@ -101,6 +101,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'hermes.context_processors.include_login_form',
+    'django.core.context_processors.request',
+)
 ROOT_URLCONF = 'HermesPress.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -155,4 +159,4 @@ LOGGING = {
     }
 }
 
-from settings_local import *
+from HermesPress.settings_local import *

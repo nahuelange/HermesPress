@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'HermesPress.views.home', name='home'),
     # url(r'^HermesPress/', include('HermesPress.foo.urls')),
+    url(r'^', include('hermes.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

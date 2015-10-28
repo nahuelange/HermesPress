@@ -3,8 +3,7 @@ import json, httplib2
 from django.utils.http import urlencode
 from django.utils.html import strip_tags
 from django.conf import settings
-import yql
-import HTMLParser
+import myql
 
 class TermExtractor(object):
 
@@ -21,12 +20,12 @@ class TermExtractor(object):
         self.metadatas = json.loads(content)
 
     def get_terms(self):
-        html_parser = HTMLParser.HTMLParser()
-        content = strip_tags(html_parser.unescape(self.metadatas['content'])).replace("\n", "")
-
-
-        y = yql.Public()
-        result = y.execute(self.query, {'text': content.encode('utf-8')})
+        #html_parser = HTMLParser.HTMLParser()
+        #content = strip_tags(html_parser.unescape(self.metadatas['content'])).replace("\n", "")
+        content = "bla bla"
+        y = myql.MYQL()
+        result = y.rawQuery(self.query, {'text': content.encode('utf-8')})
+        print(result)
         return result.results['Result']
 
     def get_excerpt(self):
