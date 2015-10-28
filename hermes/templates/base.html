@@ -1,0 +1,186 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <meta charset="utf-8">
+        <title>HermesPress - Crowd press review</title>
+        <meta name="generator" content="Bootply" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+        
+        <!--[if lt IE 9]>
+          <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+                		
+		<link href="{% static 'hermes/theme.css' %}" rel="stylesheet">
+    </head>
+    
+    <body >
+        
+		<div class="navbar navbar-fixed-top header">
+		<div class="col-md-12">
+			<div class="navbar-header">
+			  
+			  <a href="#" class="navbar-brand">HermesPress</a>
+			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
+			  <i class="glyphicon glyphicon-search"></i>
+			  </button>
+		  
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse1">
+			  <form class="navbar-form pull-left">
+				  <div class="input-group" style="max-width:470px;">
+					<input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+					<div class="input-group-btn">
+					  <button class="btn btn-default btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+					</div>
+				  </div>
+			  </form>
+			  <ul class="nav navbar-nav navbar-right">
+				 <li><a href="http://www.bootply.com" target="_ext">Bootply+</a></li>
+				 <li>
+					<a href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-bell"></i></a>
+				 </li>
+				 <li><a href="#" id="btnToggle"><i class="glyphicon glyphicon-th"></i></a></li>
+				 <li><a href="#"><i class="glyphicon glyphicon-user"></i></a></li>
+			   </ul>
+			</div>	
+		 </div>	
+		</div>
+		
+		<div class="navbar navbar-default" id="subnav">
+			<div class="col-md-12">
+				<div class="collapse navbar-collapse" id="navbar-collapse2">
+				  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#addCollectionModal" role="button" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i></a></li>
+					 <li class="active"><a href="#">Posts</a></li>
+                      {% if not request.user.is_authenticated %}
+					 <li><a href="#loginModal" role="button" data-toggle="modal">Login</a></li>
+                      {% endif %}
+					 <li><a href="#aboutModal" role="button" data-toggle="modal">About</a></li>
+				   </ul>
+				</div>	
+			 </div>	
+		</div>
+
+        <!--main-->
+        <div class="container" id="main">
+            {% block content %}{% endblock %}
+
+            <br>
+
+            <div class="clearfix"></div>
+
+            </div>
+        </div><!--/main-->
+
+
+        {% if not request.user.is_authenticated %}
+		<!--login modal-->
+		<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog">
+		  <div class="modal-content">
+			  <div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				  <h2 class="text-center"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"><br>Login</h2>
+			  </div>
+			  <div class="modal-body">
+				  <form class="form col-md-12 center-block" method="post" action="{% url 'login' %}">
+                      {% csrf_token %}
+					<div class="form-group">
+                        {{ login_form.username }}
+					</div>
+					<div class="form-group">
+                        {{ login_form.password }}
+					</div>
+					<div class="form-group">
+                        <input type="hidden" name="next" value="{{ request.path }}" />
+					  <button class="btn btn-primary btn-lg btn-block">Sign In</button>
+					  <span class="pull-right"><a href="#">Register</a></span><span><a href="#">Need help?</a></span>
+					</div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				  <div class="col-md-12">
+				  <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+				  </div>
+			  </div>
+		  </div>
+		  </div>
+		</div>
+        {% else %}
+            <div id="addCollectionModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h2 class="text-center"><br>Add collection</h2>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="" class="col-md-12 center-block">
+                            {% include 'form/form.html' with form=collection_form %}
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Add"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-md-12">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+
+		<!--about modal-->
+		<div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog">
+		  <div class="modal-content">
+			  <div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				  <h2 class="text-center">About</h2>
+			  </div>
+			  <div class="modal-body">
+				  <div class="col-md-12 text-center">
+					This software is a beta version of user's crowdsourcing for press reviews
+				  </div>
+			  </div>
+			  <div class="modal-footer">
+				  <button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>
+			  </div>
+		  </div>
+		  </div>
+		</div>
+
+        
+        <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type='text/javascript' src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- JavaScript jQuery code from Bootply.com editor -->
+        
+        <script type='text/javascript'>
+        
+        $(document).ready(function() {
+        
+            /* toggle layout */
+			$('#btnToggle').click(function(){
+				if ($(this).hasClass('on')) {
+					$('#main .col-md-6').addClass('col-md-4').removeClass('col-md-6');
+					$(this).removeClass('on');
+				}
+				else {
+					$('#main .col-md-4').addClass('col-md-6').removeClass('col-md-4');
+					$(this).addClass('on');
+				}
+			});
+        
+        });
+        
+        </script>
+        
+    </body>
+</html>

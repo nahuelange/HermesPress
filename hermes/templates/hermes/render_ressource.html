@@ -1,0 +1,25 @@
+{% if oembed %}
+    <p class="text-center embed-responsive">
+        {{ oembed|safe }}
+    </p>
+
+    <hr/>
+{% else %}
+    <a href="{{ ressource.url }}" target="_blank">
+        <span class="panel-heading">{{ ressource.title }}</span>
+    </a>
+    <div class="media">
+        {% if ressource.image %}
+        <a class="thumbnail pull-left col-sm-2" href="#">
+            <img alt="200x100%" class="media-object" src="{{ ressource.image }}" />
+        </a>
+        {% endif %}
+        {% if ressource.excerpt %}
+            <div class="media-body">
+                <p>{{ ressource.excerpt }}</p>
+            </div>
+        {% endif %}
+    </div>
+    <hr/>
+{% endif %}
+
